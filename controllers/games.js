@@ -5,8 +5,9 @@ const index = (req, res) => {
         if(!foundGames) return res.json({
             message: 'No Games found in database.'
         })
-      
-        res.send("Incomplete games#index controller function")
+        
+        // respond with a JSON-ified object of games
+        res.json({ games: foundGames })
     })
     .catch(err => console.log("Error at games#index", err))
 }
@@ -16,18 +17,17 @@ const show = (req, res) => {
         if (!foundGame) return res.json({
             message: 'Game with provided ID not found.'
         })
-        
-        res.send('Incomplete games#show controller function')
+
+        res.json({ game: foundGame })
     })
     .catch(err => console.log("Error at games#index", err))
 }
 
 const create = (req, res) => {
     db.game.create(req.body).then((savedGame) => {
-        
         // validations?
         
-        res.send('Incomplete games#create controller function')
+        res.json({ game: savedGame })
     })
     .catch(err => console.log("Error at games#index", err))
 }
@@ -40,7 +40,7 @@ const update = (req, res) => {
       }
     }).then((updatedGame) => {
         // Validations and error handling here
-        res.send('Incomplete games#update controller function')
+        res.json({ game: updatedGame })
     })
     .catch(err => console.log("Error at games#index", err))
 }
@@ -50,7 +50,7 @@ const destroy = (req, res) => {
     db.game.destroy({
       where: { id: req.params.id }
     }).then(() => {
-      res.send('Incomplete games#delete controller function')
+      res.json({ message: `Game with id ${req.params.id} has been deleted.` })
     })
     .catch(err => console.log("Error at games#index", err))
 }
